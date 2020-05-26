@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CoffeeShopApp.Data.Models
+
+@inject SignInManager<EmployeeModel> SignInManager
+@inject UserManager<EmployeeModel> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul class="nav navbar-nav">
+        <li>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-area="" asp-controller="Orders" asp-action="Index">All orders</a>
+            }
+            else
+            {
+                <a asp-area="" asp-controller="Orders" asp-action="Index">Your orders</a>
+            }
+        </li>
+        <li><a asp-area="" asp-controller="Orders" asp-action="Add">New order</a></li>
+    </ul>
+}

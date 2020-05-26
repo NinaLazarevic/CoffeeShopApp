@@ -1,0 +1,51 @@
+﻿@model List<CoffeeShopApp.Data.Models.EmployeeModel>
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<br />
+<h3 class="text-center">List of employees</h3>
+<br />
+@if (TempData["UserInfo"] != null)
+{
+    <div class="text-success text-center">@TempData["UserInfo"]</div>
+    <br />
+}
+<div class="tableDiv">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Date of birth</th>
+                <th>JMBG</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.UserName</td>
+                    <td>@employee.Email</td>
+                    <td>@employee.FirstName @employee.LastName</td>
+                    <td>@employee.DateofBirth.ToShortDateString()</td>
+                    <td>@employee.JMBG</td>
+                   
+                    @if (employee.DateDeleted == null)
+                    {
+                           <td>@Html.ActionLink("Delete", "Delete", "Employees", new { id = employee.Id }, null)</td>
+                    }
+                    else
+                    {
+                           <td class="objectDeleted">Employee deleted</td>
+                    }
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

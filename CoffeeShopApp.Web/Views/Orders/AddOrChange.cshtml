@@ -1,0 +1,61 @@
+﻿@model CoffeeShopApp.Web.Models.OrderViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+
+    var actionToExecute = "Add";
+
+    if (Url.ActionContext.RouteData.Values.Values.ElementAt(1).ToString().Equals("Edit"))
+    {
+        actionToExecute = "Edit";
+
+    }
+}
+
+@if (actionToExecute.Equals("Edit"))
+{
+    <h3>Edit order</h3>
+}
+else
+{
+    <h3>Add new order</h3>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <h4>Employee: @Model.EmployeeUserName</h4>
+        <div>
+            Total: <div id="price" class="text-info">@Model.TotalPrice</div>
+        </div>
+
+        @using (Html.BeginForm(actionToExecute, "Orders", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (actionToExecute.Equals("Edit"))
+            {
+                <input type="hidden" value="@Model.OrderId" name="OrderId" />
+                <input type="hidden" value="@Model.EmployeeId" name="EmployeeId" />
+                <input type="hidden" value="@Model.OrderNumber" name="OrderNumber" />
+                <input type="hidden" value="@Model.DateofOrder" name="DateofOrder" />
+                <input type="hidden" value="@Model.DateDeleted" name="DateDeleted" />
+            }
+
+            <products-checkboxes products-ids=@Model.Products action=@actionToExecute></products-checkboxes>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        }
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts
+{
+    <script src="~/js/site.js"></script>
+}

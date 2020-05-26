@@ -1,0 +1,54 @@
+﻿@model CoffeeShopApp.Data.Models.ProductModel
+
+@{
+    ViewData["Title"] = "Edit";
+
+    var actionToExecute = "Add";
+
+    if (Url.ActionContext.RouteData.Values.Values.ElementAt(1).ToString().Equals("Edit"))
+    {
+        actionToExecute = "Edit";
+
+    }
+}
+
+@if (actionToExecute.Equals("Edit"))
+{
+    <h3>Edit product</h3>
+}
+else
+{
+    <h3>Add new product</h3>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm(actionToExecute, "Products", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (actionToExecute.Equals("Edit"))
+            {
+                <input type="hidden" value="@Model.ProductId" name="ProductId" />
+            }
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
